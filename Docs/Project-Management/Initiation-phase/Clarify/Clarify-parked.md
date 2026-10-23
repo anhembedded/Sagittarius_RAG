@@ -1,11 +1,10 @@
 # Parked content from Clarify (not needed at the Clarify step)
 
-Removed from Clarify.md because Clarify only needs to explain *what the problem is*. Move these into Discover / Plan when needed.
-G* and DEP* IDs still exist in Clarify; R* and Q* only live here now.
+Clarify only needs to explain *what the problem is*. The sections below were removed from Clarify.md; move them into Discover / Plan when needed.
 
-## (was 5. Users and stakeholders
+## 5. Users and stakeholders
 
-### (was 5.1 Users
+### 5.1 Users
 
 | User type | What they need | How often |
 |-----------|----------------|-----------|
@@ -16,7 +15,7 @@ G* and DEP* IDs still exist in Clarify; R* and Q* only live here now.
 **Real questions users ask.** Collect 5–10 real ones (plus a few the KB cannot answer) — they become the test set:
 [Common questions](../Sub-init/Common-questions-newcomers-ask.md)
 
-### (was 5.2 Stakeholder register
+### 5.2 Stakeholder register
 
 | Name | Role | Interest | Influence (H/M/L) | Responsibility |
 |------|------|----------|-------------------|----------------|
@@ -25,6 +24,93 @@ G* and DEP* IDs still exist in Clarify; R* and Q* only live here now.
 | TODO | KB maintainer / reviewer | Correct KB | TODO | Verifies KB content |
 | TODO | Security / management | No data leaks | TODO | Decides what data can go to external LLMs |
 | TODO | KB authors | Easy updates | TODO | Update the KB following the agreed way of working |
+
+---
+
+### 6.3 Dependencies
+
+| ID | Depends on | Needed for | Owner | Status |
+|----|-----------|------------|-------|--------|
+| DEP1 | Decision on whether KB content may go to an external LLM / embedding API | Choice of stack, O1 | Security / management (TODO) | Open |
+| DEP2 | Clarification of the MAG project's needs (users, interface, deadline) | Scope, O1 | MAG project owner (TODO) | Open |
+| DEP3 | A person who verifies the KB | O2, trust in answers | TODO | Open |
+| DEP4 | Hosting for the service and the index update | O1, O3 | TODO | Open |
+
+---
+
+### 7.2 What success looks like
+
+Four scenarios after v1 ships (fill in with real names/numbers). They are written from the user's point of view and do not assume how the KB or the index is implemented.
+
+**Scenario 1 — A normal day: edit, then ask**
+
+> A KB author fixes a wrong step in `build.md` and commits it. They are told the change is fine for the RAG.
+> Within the agreed time the index reflects it. Later a member of the MAG project asks the chat
+> *"How do I build and flash the firmware?"*. In a few seconds they get a short answer with the
+> corrected step and a link to `build.md#flash`. They ask *"What is the deadline for X?"* — it is
+> not in the KB, so the tool says *"I couldn't find this in the KB"*. Nobody is misled.
+
+**Scenario 2 — Unverified or conflicting content is not presented as fact**
+
+> A member of the MAG project asks *"Which baud rate does the sensor use?"*. The answer exists only in an
+> AI-generated file that no human has verified, and a second file says something different.
+> The tool does not pick one silently. It answers with what it found, shows **both sources**, and states that
+> one is **unverified** and that the files **disagree**. The member checks the sources, finds the right value,
+> and reports the wrong file. The KB owner fixes it, and the next time the question is asked the answer is consistent.
+> *Success: wrong or conflicting KB content is visible and gets corrected, instead of becoming a confident wrong answer.*
+
+**Scenario 3 — Something breaks and the team knows**
+
+> Overnight the index update fails (e.g. the LLM/embedding service is down or a file is malformed).
+> In the morning members can still ask questions and get answers from the last good index, and the tool shows
+> *"Index last updated: 2 days ago"*. The person on duty was notified when the update failed, reads the log, sees which
+> file or service caused it, fixes it, and the next update succeeds. Nobody discovers weeks later that answers are stale.
+> *Success: failures are noticed quickly, never silent, and do not take the whole service down.*
+
+**Scenario 4 — A change to the approach is judged by evidence** *(for the team that builds the RAG)*
+
+> The team tries a new way of splitting or preparing the KB. Before releasing it they run the test questions.
+> The report shows the retrieval hit rate rose from 62% to 78%, with two questions getting worse, and which ones.
+> They keep the change and note the two regressions. Months later a different change lowers the score; the same
+> report catches it before users do.
+> *Success: quality changes are measured against the test set, not judged by feeling.*
+
+### 7.3 Success by level
+
+| Level | What success looks like | How to measure | Target |
+|-------|-------------------------|----------------|--------|
+| Answer quality | Correct answers, with the right source file + section | Test set, manual grade | TODO e.g. ≥ 80% correct |
+| Trust | Says "I don't know" when the KB has no answer; no invented facts | Unanswerable questions in test set | TODO e.g. 100% refuse, 0 hallucinated |
+| Freshness | Index reflects the latest KB | Time from merge to searchable | TODO e.g. ≤ 24 h |
+| KB quality | KB is good input for RAG; AI-generated content is verified | Retrieval hit rate on the test set; % verified | TODO e.g. hit rate ≥ X%; verified Y% |
+| Ease of update | A member can update the KB without help | Time / steps for a first edit | TODO e.g. < 10 min, no special tools |
+| Speed | Answer fast enough to be used | Latency per question | TODO e.g. < 10 s |
+| Adoption | Members of the MAG project actually use it | Queries per week, distinct users | TODO |
+| Cost | Affordable to run | LLM/hosting cost per month | TODO e.g. < $X/month |
+
+### 7.4 Acceptance gate for v1 (must all be true)
+
+- [ ] Test-set accuracy meets the target above
+- [ ] Every answer shows its source
+- [ ] "I don't know" works on the unanswerable questions
+- [ ] The chosen way to keep the KB good for RAG is in place and works (TBD in Discover)
+- [ ] The index update runs unattended and its result can be seen (log / status)
+- [ ] No confidential data sent to a disallowed provider
+- [ ] At least N real users tried it and gave feedback (TODO: N)
+
+### 7.5 Signs it is NOT working (stop and rethink)
+
+- Answers are often wrong, or cite the wrong file
+- Answers are wrong because the **KB itself is wrong** (unverified AI content)
+- Members find updating the KB too hard (rules, tooling) and stop doing it
+- The index update fails silently and nobody notices
+- Users stop using it after the first weeks
+
+### 7.6 Review
+
+At 2 weeks and 2 months after launch (TODO: owner), compare against the targets above and decide: keep, improve, or stop.
+
+---
 
 ## 8. Risks and open issues
 

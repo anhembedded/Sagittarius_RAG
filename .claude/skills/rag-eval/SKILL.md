@@ -30,5 +30,5 @@ Change one thing at a time (chunk size, template, retrieval, prompt, model). Re-
 
 ## Rules
 
-- Only run against content the user allows to leave the machine; privacy status is **unknown** (see Clarify §5.3, DEP1). Ask before using any external LLM or embedding API.
+- Only run against content the user allows to leave the machine; privacy status is **unknown** (see Clarify §5.1, privacy constraint). Ask before using any external LLM or embedding API.
 - If the RAG does not exist yet, help with the question set only.
