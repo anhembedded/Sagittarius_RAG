@@ -207,6 +207,43 @@ How will we know it works? Make it measurable.
 | AC4 | KB edits become searchable | Time from edit to searchable | TODO e.g. within X hours | Compare commit and index time |
 | AC5 | Authors can judge their change | An author can tell, before merging, whether the change works well with the RAG | TODO | Walkthrough with an author |
 
+### 6.2 What success looks like
+
+Four scenarios after v1 ships (fill in with real names/numbers). They are written from the user's point of view and do not assume how the KB or the index is implemented.
+
+**Scenario 1 — A normal day: edit, then ask**
+
+> A KB author fixes a wrong step in `build.md` and commits it. They are told the change is fine for the RAG.
+> Within the agreed time the index reflects it. Later a member of the MAG project asks the chat
+> *"How do I build and flash the firmware?"*. In a few seconds they get a short answer with the
+> corrected step and a link to `build.md#flash`. They ask *"What is the deadline for X?"* — it is
+> not in the KB, so the tool says *"I couldn't find this in the KB"*. Nobody is misled.
+
+**Scenario 2 — Unverified or conflicting content is not presented as fact**
+
+> A member of the MAG project asks *"Which baud rate does the sensor use?"*. The answer exists only in an
+> AI-generated file that no human has verified, and a second file says something different.
+> The tool does not pick one silently. It answers with what it found, shows **both sources**, and states that
+> one is **unverified** and that the files **disagree**. The member checks the sources, finds the right value,
+> and reports the wrong file. The KB owner fixes it, and the next time the question is asked the answer is consistent.
+> *Success: wrong or conflicting KB content is visible and gets corrected, instead of becoming a confident wrong answer.*
+
+**Scenario 3 — Something breaks and the team knows**
+
+> Overnight the index update fails (e.g. the LLM/embedding service is down or a file is malformed).
+> In the morning members can still ask questions and get answers from the last good index, and the tool shows
+> *"Index last updated: 2 days ago"*. The person on duty was notified when the update failed, reads the log, sees which
+> file or service caused it, fixes it, and the next update succeeds. Nobody discovers weeks later that answers are stale.
+> *Success: failures are noticed quickly, never silent, and do not take the whole service down.*
+
+**Scenario 4 — A change to the approach is judged by evidence** *(for the team that builds the RAG)*
+
+> The team tries a new way of splitting or preparing the KB. Before releasing it they run the test questions.
+> The report shows the retrieval hit rate rose from 62% to 78%, with two questions getting worse, and which ones.
+> They keep the change and note the two regressions. Months later a different change lowers the score; the same
+> report catches it before users do.
+> *Success: quality changes are measured against the test set, not judged by feeling.*
+
 ---
 
 ## 7. Summary (output of this step)
