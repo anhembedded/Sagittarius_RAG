@@ -5,7 +5,7 @@ description: Add or improve test questions in eval/questions.md and evaluate Sag
 
 # RAG evaluation
 
-The test set is `eval/questions.md`. Success targets are in `Docs/Project-Management/Initiation-phase/Clarify/Clarify.md` §6; metrics are in `Docs/Project-Management/Initiation-phase/Discover/Discover.md` §6.3.
+The test set is `eval/questions.md`. Success targets are in `Docs/Project-Management/Initiation-phase/Clarify/Clarify.md` §6; metrics are in `Docs/Project-Management/Initiation-phase/Approach.md` §6.
 
 ## Adding questions
 

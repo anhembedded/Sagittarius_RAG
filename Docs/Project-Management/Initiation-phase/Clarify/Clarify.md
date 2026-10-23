@@ -9,7 +9,7 @@
 | Author | Nathan Tran |
 | Project owner / approver | TODO |
 | Last updated | TODO |
-| Related documents | [Discover](../Discover/Discover.md) · [Test questions](../Sub-init/Common-questions-newcomers-ask.md) |
+| Related documents | [Approach](../Approach.md) · [Test questions](../Sub-init/Common-questions-newcomers-ask.md) |
 
 **Revision history**
 
@@ -23,7 +23,7 @@
 
 This document is in the **Initiation phase**. It states *why* the project exists, *what* it must deliver, the *scope*, the
 *constraints*, and what *done* means. It does **not** contain planning content (schedule, task breakdown, estimates, technical
-design); those belong to the Plan phase. Technical approaches are compared in [Discover](../Discover/Discover.md).
+design); those belong to the Plan phase. The method, gates, risks and the reasoning behind them are in [Approach](../Approach.md).
 
 **Conventions.** Fill every `TODO`. If an answer is unknown, write `Unknown — need to ask <who>`.
 You do not need every answer at once. The goal is to separate **what is clear**, **what is unclear**, and **what could make the
@@ -39,14 +39,14 @@ project fail if misunderstood**.
 | Constraints? | Deadline, budget, hosting, providers, security? | 5 |
 | Done? | What condition proves the project is complete? | 6 |
 
-Also: summary (7), approval (8). Users, stakeholders, risks and detailed open questions are intentionally left for later documents.
+Also: summary (7), approval (8). Users and stakeholders are intentionally left for later documents. Risks and contingencies are in [Approach §7](../Approach.md); detailed open questions are tracked there (§9) and in the Decision Log (`Docs/Decisions/`).
 
 ---
 
 ## 1. Project overview
 
 ### 1.1 Background
-Our teamsworks on project **Mag**. Over time we have used AI to generate a knowledge base (KB):
+Our team works on project **Mag**. Over time we have used AI to generate a knowledge base (KB):
 a lot of `.md` files (design notes, how-tos, decisions, etc.). This knowledge exists, but it is hard to find and use.
 
 > [!note] Scope note
@@ -62,7 +62,8 @@ a lot of `.md` files (design notes, how-tos, decisions, etc.). This knowledge ex
 
 ### 1.3 Real questions people ask
 
-Collect 5–10 real questions (plus a few the KB cannot answer). They show the problem in concrete terms and become the test set:
+Collect 5–10 real questions now (plus a few the KB cannot answer). They show the problem in concrete terms and become the seed of the test set,
+which grows to at least 20 questions by Gate 2 of the [Approach](../Approach.md):
 [Common questions](../Sub-init/Common-questions-newcomers-ask.md)
 
 ---
@@ -88,13 +89,13 @@ citations that make them look trustworthy. So the solution is **RAG + a way to m
 ### 2.2 Objectives (SMART)
 
 > Objectives 2–4 are **outcomes**. *How* to reach them (a template and rules, restructuring, metadata added at indexing time,
-> a check in CI, a scheduled or on-commit update, …) is **not decided**. It is compared in Discover §4.4 and recorded in the Decision Log.
+> a check in CI, a scheduled or on-commit update, …) is **not decided**. Candidates are measured against the as-is baseline (Approach §6) in the proof of concept (Gate 3), and the choice is recorded in `Docs/Decisions/`.
 > Target values and dates are placeholders until confirmed with the project owner.
 
 | ID | Objective | Specific | Measurable | Achievable | Relevant | Time-bound |
 |----|-----------|----------|------------|------------|----------|------------|
 | O1 | Provide a **RAG capability** that answers questions using the KB `.md` files | Humans ask in natural language via chat/UI; answers cite source file + section; "I don't know" when the KB has no answer | TODO e.g. ≥ 80% of test questions correct with right source; answer time < 10 s | Team is new to RAG → start with a small end-to-end spike | Root requirement (2.1) | TODO: target date |
-| O2 | A way to make the **current and future KB** good input for RAG (we deliver the *method*, not the KB content) | A method (guidance and/or tooling) that works on existing and new KB files | TODO e.g. retrieval hit rate on the test set beats the as-is baseline by X points | Depends on Discover §4.4 evidence | Wrong or badly structured KB caps RAG quality | TODO: target date |
+| O2 | A way to make the **current and future KB** good input for RAG (we deliver the *method*, not the KB content) | A method (guidance and/or tooling) that works on existing and new KB files | TODO e.g. retrieval hit rate on the test set beats the as-is baseline by X points | Depends on Gate 3 evidence (Approach) | Wrong or badly structured KB caps RAG quality | TODO: target date |
 | O3 | The RAG **reflects the latest KB** (idea so far: rebuild the index every day) | Index updates automatically after KB changes; status visible | TODO e.g. a KB edit is searchable within ≤ 24 h | Needs a scheduler / CI; depends on hosting | Stale answers erode trust | TODO: target date |
 | O4 | **All members can easily update the KB**, without special tooling | An author edits a `.md` and knows whether the change works with the RAG | TODO e.g. first edit in < 10 min without help | Depends on the chosen method for O2 | KB stays current only if updating is easy | TODO: target date |
 
@@ -105,7 +106,7 @@ citations that make them look trustworthy. So the solution is **RAG + a way to m
 | ID | Deliverable | Description | Linked objective | Owner |
 |----|-------------|-------------|------------------|-------|
 | D1 | **RAG tool** | Humans ask a question in natural language (chat/UI) and get an answer based on the `.md` files, with links to the source | O1 | TODO |
-| D2 | **Solution for a good KB** | A *method* (guidance and/or tooling) for turning the **current** KB, and building **future** KB, into good input for RAG that is easy to maintain. It is **not the KB content itself**: the KB stays owned by its authors. The method is TBD in Discover (candidates: template + rules + automatic check, AI-assisted restructuring, indexing-time processing) | O2, O4 | TODO |
+| D2 | **Solution for a good KB** | A *method* (guidance and/or tooling) for turning the **current** KB, and building **future** KB, into good input for RAG that is easy to maintain. It is **not the KB content itself**: the KB stays owned by its authors. The method is TBD after the proof of concept, Approach Gate 3 (candidates: template + rules + automatic check, AI-assisted restructuring, indexing-time processing) | O2, O4 | TODO |
 | D3 | **Index freshness** | The vector index reflects the latest KB. Approach TBD (candidate: scheduled daily rebuild; alternative: update on every merge) | O3 | TODO |
 | D4 | **Update workflow** | How a member changes the KB (candidate: edit → review → merge) and how the index picks it up | O3, O4 | TODO |
 | D5 | **Documentation** | How to run, operate, and extend the system (also records what the team learns about RAG) | All | TODO |
@@ -178,7 +179,7 @@ citations that make them look trustworthy. So the solution is **RAG + a way to m
     - If free choice: who must approve our choice (project owner, security, architecture)?
     - Approved vendors / licences / tools we may or may not use: TODO
 - Must integrate with the project owner's existing systems (auth, chat platform, CI, repo hosting)?: TODO
-- Team experience with RAG: **none** — time must be reserved for learning (see Discover)
+- Team experience with RAG: **none** — time must be reserved for learning (see [Approach §5.3](../Approach.md))
 
 ### 5.2 Assumptions (what we temporarily assume)
 
@@ -257,13 +258,13 @@ Fill this last. It should fit on one screen.
 - **Open questions:** (1) can KB content go to an external LLM / embedding API (cloud vs local)? (2) what exactly does the MAG project require (users, interface, deadline)? (3) who verifies the AI-generated KB? (4) is any technology mandated by the project owner? (5) current KB size and growth
 - **Assumptions:** see section 5.2
 
-**Next step:** [Discover](../Discover/Discover.md) — what we must learn and decide. Planning (schedule, tasks, estimates) follows in the Plan phase.
+**Next step:** Gate 2, Evidence base ([Approach §5.3](../Approach.md)) — test set, inspection of the real KB, answers to the open questions. Planning (schedule, tasks, estimates) follows in Gate 4, after the proof of concept.
 
 ---
 
 ## 8. Approval
 
-Approval to proceed to Discover (not to build).
+Approval to proceed to Gate 2, Evidence base (not to build). Approving the [Approach](../Approach.md) is part of this decision.
 
 | Name | Role | Decision | Date |
 |------|------|----------|------|

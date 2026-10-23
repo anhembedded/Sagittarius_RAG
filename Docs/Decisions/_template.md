@@ -8,7 +8,7 @@
 
 ## Context
 
-<What problem or question forces this decision? Link to Clarify / Discover sections.>
+<What problem or question forces this decision? Link to Clarify / Approach sections.>
 
 ## Options considered
 
