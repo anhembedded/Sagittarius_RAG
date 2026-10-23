@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -)",
+      "Bash(sed -i 's/\\(see Clarify §5.3, DEP1\\)/\\(see Clarify §5.1, privacy constraint\\)/' /c/Users/hoang/Documents/Sagittarius_RAG/.claude/skills/rag-eval/SKILL.md)"
+    ]
+  }
+}
