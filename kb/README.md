@@ -2,7 +2,7 @@
 
 This folder holds the Mag knowledge base used by the RAG. Files here are indexed daily.
 The rules below make files good input for retrieval and easy to update.
-They are **one candidate approach** (A1 in Discover §4.4), not a decision; the project may end up with different or lighter rules. They are **starting hypotheses**; they will be tuned in Discover (see `Docs/Project-Management/Initiation-phase/Discover/Discover.md`, section 5.2.1).
+They are **one candidate approach** (to be measured against the as-is baseline, see `Docs/Project-Management/Initiation-phase/Approach.md` §6), not a decision; the project may end up with different or lighter rules. They are **starting hypotheses**; they will be tuned in the proof of concept (Approach, Gate 3).
 
 ## How to add or update a file
 
